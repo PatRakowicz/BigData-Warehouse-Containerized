@@ -1,0 +1,31 @@
+version '3.9'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_fred
+    enviroment:
+      MYSQL_ROOT_PASSWORD: sshrat
+      MYSQL_DATABASE: fred_data
+      MYSQL_USER: freduser
+      MYSQL_PASSWORD: fredpass
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./database:/docker-entrypoint-initdb.d
+    networks:
+      - bigdata
+
+  etl:
+    build: ./etl
+    env_file:
+      - keys.env
+    depends_on:
+      - mysql
+    networks:
+      - bigdata
+
+
+networks:
+  bigdata:
+    driver: bridge
