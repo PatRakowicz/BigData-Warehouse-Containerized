@@ -6,24 +6,48 @@ FRED_API_KEY = os.environ.get("FRED_API_KEY")
 API_BASE = "https://api.stlouisfed.org/fred/series/observations"
 
 INDICATORS = {
-        "GDP" : "GDP",
-        "CPI" : "CPIAUCESL",
-        "UNRATE" : "UNRATE"
+    "GDP": "GDP",
+    "CPI": "CPIAUCESL",
+    "UNRATE": "UNRATE"
 }
 
-def fetchData(series_id):
+def fetch_indicator_data(series_id):
+    res = requests.get(API_BASE, params={
+        "series_id": series_id,
+        "api_key": FRED_API_KEY,
+        "file_type": "json"
+    })
+    res.raise_for_status()
+    return res.json()["observations"]
 
-def insertIntoDB(indicator, observations):
+def insert_into_mysql(indicator, observations):
+    conn = mysql.connector.connect(
+        host="mysql",
+        user="freduser",
+        password="fredpass",
+        database="fred_data"
+    )
+    cursor = conn.cursor()
 
-def main():
-    for label, series_id in INDICATORS.items():
-        print("Fetching data for: {label}")
-        try:
-            observations = fetchData(series_id)
-            insertIntoDB(label, observations)
-            print("Inserted {len(observations)} recrods for {label}")
-        execpt Exception as e:
-            print("Error fetching or inserting data for {label}")
+    for obs in observations:
+        date = obs["date"]
+        value = obs["value"]
+        if value == ".":
+            continue
+
+        cursor.execute("""
+            INSERT INTO fred_data (indicator, date, value)
+            VALUES (%s, %s, %s)
+            ON DUPLICATE KEY UPDATE value = VALUES(value)
+        """, (indicator, date, value))
+
+    conn.commit()
+    cursor.close()
+    conn.close()
 
 if __name__ == "__main__":
-    main()
+    for label, series_id in INDICATORS.items():
+        print(f"Fetching {label}...")
+        data = fetch_indicator_data(series_id)
+        insert_into_mysql(label, data)
+        print(f"Inserted {len(data)} records for {label}")
