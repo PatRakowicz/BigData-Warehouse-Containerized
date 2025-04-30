@@ -23,6 +23,13 @@ services:
     networks:
       - bigdata
 
+  ml:
+    build: /ml
+    depends_on:
+      - mysql
+    networks:
+      - bigdata
+
 networks:
   bigdata:
     driver: bridge
