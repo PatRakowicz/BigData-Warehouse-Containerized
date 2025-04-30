@@ -7,8 +7,13 @@ API_BASE = "https://api.stlouisfed.org/fred/series/observations"
 
 INDICATORS = {
     "GDP": "GDP",
-    "CPI": "CPIAUCESL",
-    "UNRATE": "UNRATE"
+    "CPI": "CPIAUCSL",
+    "UNRATE": "UNRATE",
+    "FEDFUNDS": "FEDFUNDS",
+    "RSXFS": "RSXFS",
+    "INDPRO": "INDPRO",
+    "PI": "PI",
+    "RECESSION": "USRECM"
 }
 
 def fetch_indicator_data(series_id):
@@ -34,6 +39,8 @@ def insert_into_mysql(indicator, observations):
         value = obs["value"]
         if value == ".":
             continue
+
+        value = float(value)
 
         cursor.execute("""
             INSERT INTO fred_data (indicator, date, value)
