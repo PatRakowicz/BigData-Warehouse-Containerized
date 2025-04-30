@@ -1,4 +1,4 @@
-create table fred_data (
+create table if not exists fred_data (
 	id int auto_increment primary key,
 	indicator varchar(20),
 	date date,
