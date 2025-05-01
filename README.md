@@ -17,9 +17,9 @@ It consists of three main containers:
 ```
 fred_etl_project/
 docker-compose.yml
-.env                   # contains your FRED_API_KEY
+.env                   # contains FRED_API_KEY
 database/
-    init.sql           # sets up the MySQL table for fred_data
+    init.sql           # sets up the MySQL schema for fred_data
 etl/
     Dockerfile
     etl_script.py      # fetches FRED indicators and inserts into MySQL
