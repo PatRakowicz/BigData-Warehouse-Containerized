@@ -22,8 +22,8 @@ WHERE indicator IN (
 ORDER BY date ASC
 '''
 data = pd.read_sql(query, conn)
-print(f"Loaded {len(df)} rows from MySQL")
-print("Available indicators:", df['indicator'].unique())
+print(f"Loaded {len(data)} rows from MySQL")
+print("Available indicators:", data['indicator'].unique())
 conn.close()
 
 data_pivot = data.pivot(index="date", columns="indicator", values="value")
