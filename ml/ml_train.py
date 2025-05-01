@@ -21,28 +21,28 @@ WHERE indicator IN (
 )
 ORDER BY date ASC
 '''
-df = pd.read_sql(query, conn)
+data = pd.read_sql(query, conn)
 print(f"Loaded {len(df)} rows from MySQL")
 print("Available indicators:", df['indicator'].unique())
 conn.close()
 
-df_pivot = df.pivot(index="date", columns="indicator", values="value")
-df_pivot.columns.name = None
-df_pivot = df_pivot.dropna()
+data_pivot = data.pivot(index="date", columns="indicator", values="value")
+data_pivot.columns.name = None
+data_pivot = data_pivot.dropna()
 
-df_pivot["UNRATE_FUTURE"] = df_pivot["UNRATE"].astype(float).shift(-3)
+data_pivot["UNRATE_FUTURE"] = data_pivot["UNRATE"].astype(float).shift(-3)
 
-df_pivot = df_pivot.dropna()
+data_pivot = data_pivot.dropna()
 
-for col in df_pivot.columns:
+for col in data_pivot.columns:
     if col not in ["UNRATE", "UNRATE_FUTURE"]:
-        df_pivot[f"{col}_lag1"] = df_pivot[col].shift(1)
-        df_pivot[f"{col}_lag2"] = df_pivot[col].shift(2)
+        data_pivot[f"{col}_lag1"] = data_pivot[col].shift(1)
+        data_pivot[f"{col}_lag2"] = data_pivot[col].shift(2)
 
-df_pivot = df_pivot.dropna()
+data_pivot = data_pivot.dropna()
 
-X = df_pivot.drop(columns=["UNRATE", "UNRATE_FUTURE"])
-y = df_pivot["UNRATE_FUTURE"]
+X = data_pivot.drop(columns=["UNRATE", "UNRATE_FUTURE"])
+y = data_pivot["UNRATE_FUTURE"]
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, shuffle=False)
 
