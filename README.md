@@ -16,16 +16,16 @@ It consists of three main containers:
 
 ```
 fred_etl_project/
-├── docker-compose.yml
-├── .env                   # contains your FRED_API_KEY
-├── database/
-│   └── init.sql           # sets up the MySQL table for fred_data
-├── etl/
-│   ├── Dockerfile
-│   └── etl_script.py      # fetches FRED indicators and inserts into MySQL
-└── ml/
-    ├── Dockerfile
-    └── ml_train.py        # loads from MySQL and trains a RandomForest classifier
+docker-compose.yml
+.env                   # contains your FRED_API_KEY
+database/
+    init.sql           # sets up the MySQL table for fred_data
+etl/
+    Dockerfile
+    etl_script.py      # fetches FRED indicators and inserts into MySQL
+ml/
+    Dockerfile
+    ml_train.py        # loads data from MySQL and trains a RandomForest classifier
 ```
 
 ---
