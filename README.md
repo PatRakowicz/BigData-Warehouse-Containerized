@@ -25,7 +25,7 @@ etl/
     etl_script.py      # fetches FRED indicators and inserts into MySQL
 ml/
     Dockerfile
-    ml_train.py        # loads data from MySQL and trains a RandomForest classifier
+    ml_train.py        # loads data from MySQL and trains a RandomForest classifier that predicts recession
 ```
 
 ---
@@ -49,8 +49,8 @@ ml/
 
 - Reads historical indicators from MySQL
 - Pivots the data and creates lag features
-- Trains a `RandomForestClassifier` to predict whether a given month is in a recession
-- Outputs accuracy and a classification report
+- Trains a `RandomForestClassifier` to predict when or if there will be a recession in 3 months
+- Outputs persentage of unemplyment and a value that displays 1 or 0, 1 being we will have a unenployment
 
 ---
 
