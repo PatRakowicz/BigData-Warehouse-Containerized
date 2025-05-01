@@ -27,6 +27,7 @@ services:
     build: /ml
     depends_on:
       - mysql
+      - etl
     networks:
       - bigdata
 
