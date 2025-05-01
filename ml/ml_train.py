@@ -27,7 +27,7 @@ print("Available indicators:", df['indicator'].unique())
 conn.close()
 
 df_pivot = df.pivot(index="date", columns="indicator", values="value")
-df_pivot.columns.name = None  # Clean up column name metadata
+df_pivot.columns.name = None
 df_pivot = df_pivot.dropna()
 
 df_pivot["UNRATE_FUTURE"] = df_pivot["UNRATE"].astype(float).shift(-3)
