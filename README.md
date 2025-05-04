@@ -1,7 +1,7 @@
 # BigData Warehouse & Recession Classifier
 **Time Spent (h)**:
 - **4**: General idea was a bit hard on how i could do this. Was a little stuck on getting the needed containers, attempted to do either visuals (time might be out of the question) or some sort of Machine Learning idea.
-- **3.5**: Coding and applying the application was some what straight forward, got a little lost on the ML side of python. Honestly should have done visuals, something very simple, like web page with a table and just show the data from the SQL container.
+- **5**: Coding and applying the application was some what straight forward, got a little lost on the ML side of python. Honestly should have done visuals, something very simple, like web page with a table and just show the data from the SQL container. Docker was interesting to figure out, they have great documentation. I have experimented with docker-compose for a little while here. Did figure out that you can run multiple applications off one docker-compose file. Allowing for one file to handle all the containers and witch run at what moment. It will not always start correctly, you might have to run the SQL first and then ETL and then you can run your model off the data from the SQL container.
 
 Dockerized big data pipeline:
 - Fetches U.S. economic indicators from the Federal Reserve's FRED API.
