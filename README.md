@@ -1,14 +1,17 @@
 # BigData Warehouse & Recession Classifier
+**Time Spent (h)**:
+- **4**: General idea was a bit hard on how i could do this. Was a little stuck on getting the needed containers, attempted to do either visuals (time might be out of the question) or some sort of Machine Learning idea.
+- **3.5**: Coding and applying the application was some what straight forward, got a little lost on the ML side of python. Honestly should have done visuals, something very simple, like web page with a table and just show the data from the SQL container.
 
-This project is a Dockerized big data pipeline that:
-- Fetches U.S. economic indicators from the Federal Reserve's FRED API
-- Loads structured data into a MySQL data warehouse
-- Trains a machine learning model to classify time periods as recession or not based on historical economic data
+Dockerized big data pipeline:
+- Fetches U.S. economic indicators from the Federal Reserve's FRED API.
+- Loads structured data into a MySQL data warehouse.
+- Trains a machine learning model to predict unenployment rates in a given span of 3 months.
 
 It consists of three main containers:
 - `mysql` → stores the economic data
 - `etl` → fetches and loads FRED data into the database
-- `ml` → trains and evaluates a recession classification model
+- `ml` → trains and evaluates a classification model
 
 ---
 
@@ -25,7 +28,7 @@ etl/
     etl_script.py      # fetches FRED indicators and inserts into MySQL
 ml/
     Dockerfile
-    ml_train.py        # loads data from MySQL and trains a RandomForest classifier that predicts recession
+    ml_train.py        # loads data from MySQL and trains a RandomForest classifier
 ```
 
 ---
@@ -56,16 +59,15 @@ ml/
 ---
 
 ## How to Use
-
+_Make sure you have some sort of docker applicaion installed and working on your machine. This can either be DockerDesktop or Docker CLI.
+Run a hello wolrd container to test things._
 ### 1. Clone the project
-
 ```bash
 git clone (this repository)
 cd fred-etl-project
 ```
 
 ### 2. Set up your `.env` file
-
 Create a `.env` file in the root of the project with your FRED API key:
 
 ```env
