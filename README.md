@@ -49,8 +49,9 @@ ml/
 
 - Reads historical indicators from MySQL
 - Pivots the data and creates lag features
-- Trains a `RandomForestClassifier` to predict when or if there will be a recession in 3 months
-- Outputs persentage of unemplyment and a value that displays 1 or 0, 1 being we will have a unenployment
+- Trains a `RandomForestClassifier` to predict unenployment rates in a given span of 3 months.
+- It will give two scores that will display what persentage we are at and a if 1 we are in a high unenployement 0 if not.
+- IE. get something like 0.09 stating we are really low.
 
 ---
 
@@ -90,25 +91,14 @@ Run this to see the machine learning results:
 ```bash
 docker-compose logs ml
 ```
-
-You’ll see output like:
-
-```
-=== Confusion Matrix ===
-[[32 0]
- [ 1 0]]
-
-=== Classification Report ===
-precision recall f1-score support
-...
-```
-
+Then it should display what the current application in the container is doing.
 ---
 
 ## Developer Commands
 
 | Task                           | Command                         |
 | ------------------------------ | ------------------------------- |
+| Launch all containers          | `docker-compose up --build -d`  | 
 | Run only the ETL container     | `docker-compose up --build etl` |
 | Run only the ML container      | `docker-compose up --build ml`  |
 | Stop and remove all containers | `docker-compose down`           |
